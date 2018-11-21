@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title></title>
+	<script src="js/comment-input.js"></script>
+  <script src="js/comment-list.js"></script>
+	<script src="js/vue.min.js"></script>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+	<div id="root" >
+		<!--用户信息-->	
+		<cinput @save='dosave' ></cinput>				
+		<clist v-bind:todo='comments' @del='delme'></clist>
+		
+	</div>
+	<script>
+		
+		//用户评论
+		Vue.component('cinput',commentInput);
+		Vue.component('clist',commentList);
+		Vue.component('commentItem',commentItem);
+		
+		var app = new Vue({
+			data:{
+				comments:[]
+			},
+			methods:{
+				updatelocal(){
+					localStorage.setItem('vvv-comments',JSON.stringify(this.comments));
+				},
+				dosave:function(res){
+					//console.log(res);
+					this.comments.push(res);
+					this.updatelocal();
+				},
+				delme:function(id){
+					this.comments = this.comments.filter((c) => c.id != id );
+					this.updatelocal();
+				}				
+			},
+			created() {
+				const cs = localStorage.getItem('vvv-comments');
+				if (cs) {
+					this.comments = JSON.parse(cs);
+				}
+			},
+			el:"#root"
+		});	
+						
+	</script>
+</body>
+</html>

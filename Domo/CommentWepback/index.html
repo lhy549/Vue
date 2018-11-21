@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+		<head>  
+			<title>模仿评论功能</title>	
+			<script src="js/vue.min.js"></script>
+			<link rel="stylesheet" href="index.css">
+			
+		</head>
+	<body>
+		
+		<div id="root" >
+			<comment></comment>
+		</div>
+		
+		<script type='module'>
+			
+			import mycomment from './component/comment/comment-comp.js';
+			//注册
+			Vue.component('comment',mycomment);
+			
+			var vm = new Vue({
+				el:"#root"
+			});
+						
+		</script>
+	</body>
+</html>
